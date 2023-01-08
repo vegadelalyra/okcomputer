@@ -6,7 +6,6 @@
 const baseURL = "https://www.brainyquote.com", epistle = []
 
 export default async function getQuotes(keyword, wordsPerPhrase = 9, url) {
-
     // guard clause for keyword: must be only letters.
     const invalid = '\nError: Please insert valid keywords\
         \n(neither numbers, voids nor signs).\n'
@@ -34,7 +33,7 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9, url) {
 
     // CSS-selector and filter of the desired HTML element
     const quotes = $(".oncl_q:nth-child(1) div")
-    if (!multiWords) console.log(guardClause)
+    // if (!multiWords) console.log(guardClause)
 
     quotes.each(function() {   
         const quote = $(this).text()
@@ -56,6 +55,6 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9, url) {
     // console.log('\n', epistle.length, 'phrases scraped from web!\n...and the chosen one is:')
     const chosenOne = epistle[Math.floor(Math.random() * epistle.length)]
     return chosenOne
-
-}; const phrase = await getQuotes('what is love', 20)
+}
+// const phrase = await getQuotes('what is love', 20)
 // console.log(phrase)
