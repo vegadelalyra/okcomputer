@@ -1,8 +1,11 @@
-import cheerio from 'cheerio'
+/* lines you want to uncomment are
+** 33, 43, 56, 61 they all are CLGs
+*/ import cheerio from 'cheerio'
+
 
 const baseURL = "https://www.brainyquote.com", epistle = []
 
-async function getQuotes(keyword, wordsPerPhrase = 9, url) {
+export default async function getQuotes(keyword, wordsPerPhrase = 9, url) {
 
     // guard clause for keyword: must be only letters.
     const invalid = '\nError: Please insert valid keywords\
@@ -50,9 +53,9 @@ async function getQuotes(keyword, wordsPerPhrase = 9, url) {
     if ($(".disabled").text() !== '..Next') return getQuotes(keyword, wordsPerPhrase, baseURL + nextPage)
     
     // output
-    console.log('\n', epistle.length, 'phrases scraped from web!\n...and the chosen one is:')
+    // console.log('\n', epistle.length, 'phrases scraped from web!\n...and the chosen one is:')
     const chosenOne = epistle[Math.floor(Math.random() * epistle.length)]
     return chosenOne
 
 }; const phrase = await getQuotes('what is love', 20)
-console.log(phrase)
+// console.log(phrase)
