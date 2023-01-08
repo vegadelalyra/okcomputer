@@ -15,4 +15,4 @@ avg.push(elapsedTime); n++
 } while (n < 1)
 
 avg = avg.reduce((acc, val) => acc + val, 0) / avg.length
-console.log('as it is, your code roughly takes', avg, 'ms')
+console.log('\nas it is, your code roughly takes', avg, 'ms')
