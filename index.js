@@ -12,7 +12,7 @@ do {
     const elapsedTime = end - start
     console.log(`Elapsed time: ${elapsedTime}ms`)
     avg.push(elapsedTime); n++
-} while (n < 1)
+} while (n < 99)
 
 avg = avg.reduce((acc, val) => acc + val, 0) / avg.length
 console.log('\nas it is, your code roughly takes', avg, 'ms')
