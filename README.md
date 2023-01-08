@@ -2,8 +2,8 @@
 
 Get quotes of any words you send to the terminal!
 
-REMEMBER: THE COMMAND IS "okcomputer".
-(hail radiohead)
+REMEMBER: THE COMMAND IS "okcomputer"
+(hail radiohead).
 
 ## Install
 
