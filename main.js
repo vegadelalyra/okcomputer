@@ -59,7 +59,7 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
             let curated = a => button(a).attr('href')
             let nextPage = button(8).text() === 'Next' ? curated(8): curated(9)
             
-            if ($(".disabled").text() !== '..Next') return closure(baseURL + nextPage)
+            if ($(".disabled").text().includes('Next')) return closure(baseURL + nextPage)
             
             // output
             // console.log('\n', epistle.length, 'phrases scraped from web!\n...and the chosen one is:')

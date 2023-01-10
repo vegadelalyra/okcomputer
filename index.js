@@ -10,6 +10,7 @@ const rl = readline.createInterface({
 }) 
 
 let n = 0, avg = []; do {
+    // Reads user input
     const keywords = await new Promise(
         resolve => rl.question(
             'I do listen, human: ',
@@ -17,11 +18,13 @@ let n = 0, avg = []; do {
         )
     ); rl.close()
 
+    // fetchs and displays random phrase from scraped web
     console.log('...' + keywords + '? Let me jump in, human...')
     const start = performance.now()
     const okcomputer = await getQuotes(keywords, 10)
-
     console.log(okcomputer)
+
+    // record time performance
     const end = performance.now()
     const elapsedTime = end - start
     console.log(`Elapsed time: ${elapsedTime}ms`)
