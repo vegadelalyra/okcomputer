@@ -1,8 +1,8 @@
 {
-  "name": "okcomputer",
+  "name": "@delalyra/okcomputer",
   "version": "1.0.0",
   "description": "Get quotes from ANY WORDS you send to the terminal!",
-  "main": "index.js",
+  "main": "build.js",
   "type": "module",
   "scripts": {
     "test": "node src/debug.js",
@@ -23,5 +23,6 @@
   "bin": {
     "okcomputer": "./dist/build.js"
   },
-  "preferGlobal": true
+  "preferGlobal": true,
+  "private": false
 }
