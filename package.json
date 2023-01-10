@@ -1,18 +1,27 @@
 {
-  "name": "nueva-carpeta",
-  "version": "0.0.1",
-  "description": "",
+  "name": "okcomputer",
+  "version": "1.0.0",
+  "description": "Get quotes from ANY WORDS you send to the terminal!",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node main.mjs"
+    "test": "node src/debug.js",
+    "yargs": "node lib/helper.js",
+    "dist": "node dist/build.js"
   },
-  "keywords": [],
+  "keywords": [
+    "random quotes",
+    "ok computer",
+    "talk with your robot"
+  ],
   "author": "Vega de la Lyra <lyradeperseo@gmail.com> (https://www.linkedin.com/in/vegadelalyra/)",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.2.2",
     "cheerio": "^1.0.0-rc.12",
-    "json2csv": "^5.0.7"
-  }
+    "yargs": "^17.6.2"
+  },
+  "bin": {
+    "okcomputer": "./dist/build.js"
+  },
+  "preferGlobal": true
 }
