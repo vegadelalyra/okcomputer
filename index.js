@@ -9,19 +9,18 @@ const rl = readline.createInterface({
     prompt: ''
 }) 
 
-let n = 0, avg = []
-do {
-    const start = performance.now()
+let n = 0, avg = []; do {
+    const keywords = await new Promise(
+        resolve => rl.question(
+            'I do listen, human: ',
+            resolve
+        )
+    ); rl.close()
 
-    // const keywords = await new Promise(
-    //     resolve => rl.question(
-    //         'I do listen, human: ',
-    //         resolve
-    //     )
-    // )
-    // rl.close()
-    // console.log('...' + keywords + '?')
-    const okcomputer = await getQuotes('loneliness', 10)
+    console.log('...' + keywords + '? Let me jump in, human...')
+    const start = performance.now()
+    const okcomputer = await getQuotes(keywords, 10)
+
     console.log(okcomputer)
     const end = performance.now()
     const elapsedTime = end - start
