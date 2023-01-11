@@ -1,6 +1,4 @@
-/* lines you want to uncomment are
-** 33, 43, 56, 61 they all are CLGs
-*/ import cheerio from 'cheerio'
+import cheerio from 'cheerio'
 
 export default function getQuotes(keyword, wordsPerPhrase = 9) {
     // guard clause for keyword: must be only letters.
@@ -30,7 +28,7 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
         const res = await fetch(url || URL)
         const html = await res.text()
         const $ = cheerio.load(html)
-        // console.log(url || URL)
+        console.log(url || URL)
         
         // CSS-selector  of the desired HTML element
         const quotes = $(".oncl_q:nth-child(1) div")
@@ -59,7 +57,7 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
             let curated = a => button(a).attr('href')
             let nextPage = button(8).text() === 'Next' ? curated(8): curated(9)
             
-            if ($(".disabled").text().includes('Next')) return closure(baseURL + nextPage)
+            if (!$(".disabled").text().includes('Next')) return closure(baseURL + nextPage)
             
             // output
             // console.log('\n', epistle.length, 'phrases scraped from web!\n...and the chosen one is:')
@@ -68,5 +66,3 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
         }
     }
 }
-// const phrase = await getQuotes('what is love', 20)
-// console.log(phrase)
