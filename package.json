@@ -17,11 +17,12 @@
   "author": "Vega de la Lyra <lyradeperseo@gmail.com> (https://www.linkedin.com/in/vegadelalyra/)",
   "license": "MIT",
   "dependencies": {
+    "@delalyra/okcomputer": "^1.0.2",
     "cheerio": "^1.0.0-rc.12",
     "yargs": "^17.6.2"
   },
   "bin": {
-    "okcomputer": "node dist/build.js"
+    "okcomputer": "./dist/build.js"
   },
   "preferGlobal": true,
   "private": false
