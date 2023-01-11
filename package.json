@@ -2,7 +2,7 @@
   "name": "@delalyra/okcomputer",
   "version": "1.0.2",
   "description": "Get quotes from ANY WORDS you send to the terminal!",
-  "main": "./dist/build.js",
+  "main": "build.js",
   "type": "module",
   "scripts": {
     "test": "node src/debug.js",
@@ -21,7 +21,7 @@
     "yargs": "^17.6.2"
   },
   "bin": {
-    "okcomputer": "./dist/build.js"
+    "okcomputer": "node dist/build.js"
   },
   "preferGlobal": true,
   "private": false
