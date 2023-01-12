@@ -81,8 +81,8 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
             if (!epistle.length) return checkPoint_banUnquotedLinks(uselessPage)
 
             // output
-            const chosenOne = random(epistle)
-            chosenOne.slice(0, -2)
+            let chosenOne = random(epistle)
+            chosenOne = chosenOne.slice(0, -1)
             return '\x1b[33m' + chosenOne + '\x1b[37m'
         }
     }
