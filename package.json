@@ -1,6 +1,6 @@
 {
   "name": "@delalyra/okcomputer",
-  "version": "1.0.2-test0-1",
+  "version": "1.1.0",
   "description": "Get quotes from ANY WORDS you send to the terminal!",
   "main": "build.js",
   "type": "module",
