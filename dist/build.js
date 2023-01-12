@@ -1,3 +1,2 @@
-import howManyWords from "../lib/verbose/howManyWords.js"
-
-console.log(howManyWords)
+#!/usr/bin/env node
+import argv from "../lib/yargs.js"

@@ -28,7 +28,7 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
         const res = await fetch(url || URL)
         const html = await res.text()
         const $ = cheerio.load(html)
-        console.log(url || URL)
+        // console.log(url || URL)
         
         // CSS-selector  of the desired HTML element
         const quotes = $(".oncl_q:nth-child(1) div")
