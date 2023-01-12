@@ -25,3 +25,12 @@ let n = 0, avg = []; do {
 
 avg = avg.reduce((acc, val) => acc + val, 0) / avg.length
 console.log('\nas it is, your code roughly takes', avg, 'ms')
+
+let miau = `Prev
+1
+2
+3
+Next
+`
+miau = miau.split('\n').filter(n => !isNaN(n))
+console.log(miau);

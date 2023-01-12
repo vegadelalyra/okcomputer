@@ -40,6 +40,13 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
         const guardClause = $('.bq-subnav-h1').text() 
         const badNews =`\nBad news! We haven't written quotes for ${keyword}\n`
         if (guardClause === '\nPage Not Found\n') return badNews + guardClause 
+
+        // second guard clause: does thou word have pages? 
+        const random = arr => arr[Math.floor(Math.random() * arr.length)]
+        let havePages = $('.pagination-sm').text()
+        if (!!havePages) havePages = havePages.split('\n').filter(n => !isNaN(n) && !!n)
+        havePages = random(havePages)
+        console.log(havePages);
         fetchSucceed = true; return innerClosure()        
         
         async function innerClosure () {
@@ -57,11 +64,9 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
             let curated = a => button(a).attr('href')
             let nextPage = button(8).text() === 'Next' ? curated(8): curated(9)
             
-            if (!$(".disabled").text().includes('Next')) return closure(baseURL + nextPage)
-            
             // output
             // console.log('\n', epistle.length, 'phrases scraped from web!\n...and the chosen one is:')
-            const chosenOne = epistle[Math.floor(Math.random() * epistle.length)]
+            const chosenOne = random(arr)
             return '\x1b[33m' + chosenOne + '\x1b[37m'
         }
     }
