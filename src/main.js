@@ -18,6 +18,8 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
     ? `${baseURL}/search_results?q=${multiWords}` 
     : `${baseURL}/topics/${keyword}-quotes`
     
+    function random(arr) {return arr[Math.floor(Math.random()*arr.length)]}
+
     return closure()
     
     async function closure(url, msg) {
@@ -33,20 +35,20 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
         const badNews =`\nBad news! We haven't written quotes for ${keyword}\n`
         if (guardClause === '\nPage Not Found\n') return badNews + guardClause 
         fetchSucceed = true
-
-        // Second guard clause: does thou word have pages? 
-        function random(arr) {return arr[Math.floor(Math.random()*arr.length)]}
-        let havePages = $('.pagination-sm').text()
-        if (!havePages) return innerClosure()
-
-        // pagination (code will scrape a random page)
-        const splittedPages = havePages.split('\n').filter(n => !isNaN(n) && !!n)
+        
         return checkPoint_banUnquotedLinks()
 
         function checkPoint_banUnquotedLinks(ban) {
+            // Second guard clause: does thou word have pages? 
+            let havePages = $('.pagination-sm').text()
+            if (!havePages) return innerClosure()
+
+            // pagination (code will scrape a random page)
+            const splittedPages = havePages.split('\n').filter(n => !isNaN(n) && !!n)
+
             // Pagination's Guard Clause: non-matching quote on page
             if (ban) splittedPages.splice(splittedPages.indexOf(ban), 1) 
-            if (!splittedPages.length) return console.log("\nTry changing your quote's length\n")
+            if (!splittedPages.length) return "\nTry changing your quote's length\n"
 
             // Guard Clause: if first page is met
             let randomPage = Number(random(splittedPages))
@@ -75,7 +77,7 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
             }) 
             
             // GUARD CLAUSE: Did you catch any? 
-            if (!epistle.length && !uselessPage) return console.log("\nTry changing your quote's length\n")
+            if (!epistle.length && !uselessPage) return "\nTry changing your quote's length\n"
             if (!epistle.length) return checkPoint_banUnquotedLinks(uselessPage)
 
             // output
