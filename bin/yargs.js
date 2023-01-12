@@ -13,10 +13,7 @@ const argv = yargs(process.argv.slice(2))
 
 if (!!argv.w) import('../lib/verbose/verbose.js')
 .then(m => m.default(argv.words))
+else import('./utility.js')
+.then(mod => mod.okcomputer(process.argv.slice(2).join(' ')))
 
-// import('./utility.js')
-//     .then(mod => mod.okcomputer(
-//         process.argv.slice(2).join(' ')
-//     ))
-
-    export default argv
+export default argv

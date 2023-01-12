@@ -1,8 +1,3 @@
-const a = ['awebo', 'awebito', 'miau', 'awe', 'arroz']
+import howManyWords from "../lib/verbose/howManyWords.js"
 
-const b = a.reduce( (prev, val, index) => {
-    if (val.includes('awe')) prev.push(index)
-    return prev
-}, [])
-
-console.log(b);
+console.log(howManyWords)
