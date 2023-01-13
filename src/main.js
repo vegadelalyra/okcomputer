@@ -22,13 +22,13 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
 
     return closure()
     
-    async function closure(url, msg) {
+    async function closure(url, msg, pages) {
         // fetch and parse the target website
         const res = await fetch(url || URL)
         const html = await res.text()
         const $ = cheerio.load(html)
         
-        if (fetchSucceed) return innerClosure(msg)
+        if (fetchSucceed) return innerClosure(msg, pages)
         
         // In first place xd guard clause: Do we have your word?
         const guardClause = $('.bq-subnav-h1').text() 
@@ -44,9 +44,9 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
         havePages = Number(havePages.split('\n').findLast(n => !isNaN(n) && !!n))
         const splittedPages = Array.from({length: havePages}, (_, i) => i + 1)
         
-        return checkPoint_banUnquotedLinks()
+        return checkPoint_banUnquotedLinks(splittedPages)
 
-        function checkPoint_banUnquotedLinks(ban) {
+        function checkPoint_banUnquotedLinks(splittedPages, ban) {
 
             // Pagination's Guard Clause: non-matching quote on page
             if (ban) splittedPages.splice(splittedPages.indexOf(ban), 1) 
@@ -58,7 +58,7 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
 
             // Guard clause: if any other page is met
             let page = URL + `_${randomPage}`
-            return closure(page, randomPage)
+            return closure(page, randomPage, splittedPages)
         }
         
         function innerClosure(uselessPage = 0) {
