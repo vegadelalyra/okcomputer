@@ -33,7 +33,7 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
     
     // Second guard clause: does thou word have pages? 
     let havePages = $('.pagination-sm').text()
-    if (!havePages) return closure()
+    if (!havePages) return closure(URL)
     
     // pagination (code will scrape a random page)
     havePages = havePages.split('\n').findLast(n => !isNaN(n) && !!n)
@@ -56,7 +56,7 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
 
     async function closure(next) {
         // update fetched link
-        $ = await fet(next || page || URL)
+        $ = await fet(next || page)
         
         // get the elements that matches your conditions
         const quotes = $(".oncl_q:nth-child(1) div")
