@@ -36,15 +36,17 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
         if (guardClause === '\nPage Not Found\n') return badNews + guardClause 
         fetchSucceed = true
         
+        // Second guard clause: does thou word have pages? 
+        let havePages = $('.pagination-sm').text()
+        if (!havePages) return innerClosure()
+        
+        // pagination (code will scrape a random page)
+        havePages = Number(havePages.split('\n').findLast(n => !isNaN(n) && !!n))
+        const splittedPages = Array.from({length: havePages}, (_, i) => i + 1)
+        
         return checkPoint_banUnquotedLinks()
 
         function checkPoint_banUnquotedLinks(ban) {
-            // Second guard clause: does thou word have pages? 
-            let havePages = $('.pagination-sm').text()
-            if (!havePages) return innerClosure()
-
-            // pagination (code will scrape a random page)
-            const splittedPages = havePages.split('\n').filter(n => !isNaN(n) && !!n)
 
             // Pagination's Guard Clause: non-matching quote on page
             if (ban) splittedPages.splice(splittedPages.indexOf(ban), 1) 
@@ -55,10 +57,7 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
             if (randomPage == 1) return closure(null, randomPage)
 
             // Guard clause: if any other page is met
-            let button = nth => $(`.page-item:nth-child(${nth}) .page-link`)
-            let clickButton = a => button(a).attr('href')
-            let page = baseURL + clickButton(randomPage + 1)
-            
+            let page = URL + `_${randomPage}`
             return closure(page, randomPage)
         }
         
