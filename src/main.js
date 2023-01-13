@@ -26,6 +26,10 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
         return $
     }; let $ = await fet(URL)
     
+    // Required variables
+    const end = "\nTry changing your quote's length\
+    \x1b[33m(okcomputer -w)\x1b[37m\n", epistle = []
+
     // In first place xd guard clause: Do we have your word?
     const guardClause = $('.bq-subnav-h1').text() 
     const badNews =`\nBad news! We haven't written quotes for ${keyword}\n`
@@ -47,10 +51,6 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
         return URL + chosenPage
     }; let randomPage = rP()
     let page = pageGen()
-
-    // Required variables
-    const end = "\nTry changing your quote's length\
-    \x1b[33m(okcomputer -w)\x1b[37m\n", epistle = []
 
     return closure()
 
