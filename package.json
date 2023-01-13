@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "node src/debug.js",
-    "yargs": "node dist/build.js"
+    "yargs": "node dist/build.js",
+    "words": "node dist/build.js -words"
   },
   "keywords": [
     "random quotes",
