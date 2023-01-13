@@ -56,7 +56,7 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
 
     async function closure(next) {
         // update fetched link
-        $ = await fet(next || page)
+        $ = await fet(next || page || URL)
         
         // get the elements that matches your conditions
         const quotes = $(".oncl_q:nth-child(1) div")
