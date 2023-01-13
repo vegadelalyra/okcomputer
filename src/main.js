@@ -1,6 +1,6 @@
 import cheerio from 'cheerio'
 
-export default function getQuotes(keyword, wordsPerPhrase = 9) {
+export default async function getQuotes(keyword, wordsPerPhrase = 9) {
     // guard clause for keyword: must be only letters.
     if ( /[^a-zA-Z\s]/.test(keyword) || !keyword ) {
         return '\nError: Please insert valid keywords\
@@ -14,75 +14,74 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
     
     // dynamic URL and vital resources for code to succeed
     const baseURL = "https://www.brainyquote.com" 
-    let fetchSucceed = false, URL = multiWords 
+    let URL = multiWords 
     ? `${baseURL}/search_results?q=${multiWords}` 
     : `${baseURL}/topics/${keyword}-quotes`
-    
-    function random(arr) {return arr[Math.floor(Math.random()*arr.length)]}
 
-    return closure()
-    
-    async function closure(url, msg, pages) {
-        // fetch and parse the target website
-        const res = await fetch(url || URL)
+    // fetch and parse the target website
+    async function fet(u) {
+        const res = await fetch(u)
         const html = await res.text()
         const $ = cheerio.load(html)
-        
-        if (fetchSucceed) return innerClosure(msg, pages)
-        
-        // In first place xd guard clause: Do we have your word?
-        const guardClause = $('.bq-subnav-h1').text() 
-        const badNews =`\nBad news! We haven't written quotes for ${keyword}\n`
-        if (guardClause === '\nPage Not Found\n') return badNews + guardClause 
-        fetchSucceed = true
-        
-        // Second guard clause: does thou word have pages? 
-        let havePages = $('.pagination-sm').text()
-        if (!havePages) return innerClosure()
-        
-        // pagination (code will scrape a random page)
-        havePages = Number(havePages.split('\n').findLast(n => !isNaN(n) && !!n))
-        const splittedPages = Array.from({length: havePages}, (_, i) => i + 1)
-        
-        return checkPoint_banUnquotedLinks(splittedPages)
+        return $
+    }; let $ = await fet(URL)
+    
+    // In first place xd guard clause: Do we have your word?
+    const guardClause = $('.bq-subnav-h1').text() 
+    const badNews =`\nBad news! We haven't written quotes for ${keyword}\n`
+    if (guardClause === '\nPage Not Found\n') return badNews + guardClause 
+    
+    // Second guard clause: does thou word have pages? 
+    let havePages = $('.pagination-sm').text()
+    if (!havePages) return closure()
+    
+    // pagination (code will scrape a random page)
+    havePages = Number(havePages.split('\n').findLast(n => !isNaN(n) && !!n))
+    const splittedPages = Array.from({length: havePages}, (_, i) => i + 1)
 
-        function checkPoint_banUnquotedLinks(splittedPages, ban) {
+    // get random page
+    function random(arr) {return arr[Math.floor(Math.random()*arr.length)]}
+    let randomPage = Number(random(splittedPages))
+    let chosenPage = randomPage == 1 ? '' : `_${randomPage}` 
+    let page = URL + chosenPage
 
-            // Pagination's Guard Clause: non-matching quote on page
-            if (ban) splittedPages.splice(splittedPages.indexOf(ban), 1) 
-            if (!splittedPages.length) return "\nTry changing your quote's length\n"
+    // Required variables
+    const end = "\nTry changing your quote's length\n", epistle = []
 
-            // Guard Clause: if first page is met
-            let randomPage = Number(random(splittedPages))
-            if (randomPage == 1) return closure(null, randomPage)
+    return closure()
 
-            // Guard clause: if any other page is met
-            let page = URL + `_${randomPage}`
-            return closure(page, randomPage, splittedPages)
-        }
+    async function closure(next) {
+        // update fetched link
+        $ = await fet(next || page)
         
-        function innerClosure(uselessPage = 0) {
-            // CSS-selector  of the desired HTML element
-            const quotes = $(".oncl_q:nth-child(1) div")
-            
-            // get the elements that matches your conditions
-            const epistle = [] 
-            quotes.each(function() {   
+        // get the elements that matches your conditions
+        const quotes = $(".oncl_q:nth-child(1) div")
+        quotes.each(function() {   
             if ($(this)
                 .text()
                 .split(' ')
                 .length <= wordsPerPhrase
-                ) epistle.push($(this).text())
-            }) 
-            
-            // GUARD CLAUSE: Did you catch any? 
-            if (!epistle.length && !uselessPage) return "\nTry changing your quote's length\n"
-            if (!epistle.length) return checkPoint_banUnquotedLinks(uselessPage)
+            ) epistle.push($(this).text())
+        }) 
+        
+        // GUARD CLAUSE: Did you catch any? 
+        if (!epistle.length) return innerClosure()
+        
+        // output
+        let chosenOne = random(epistle)
+        chosenOne = chosenOne.slice(0, -1)
+        return '\x1b[33m' + chosenOne + '\x1b[37m'
 
-            // output
-            let chosenOne = random(epistle)
-            chosenOne = chosenOne.slice(0, -1)
-            return '\x1b[33m' + chosenOne + '\x1b[37m'
+        function innerClosure() {
+            // Pagination's Guard Clause: non-matching quote on page
+            splittedPages?.splice(splittedPages.indexOf(randomPage), 1)
+            if (!havePages || !splittedPages.length) return end
+
+            // Callback to next page
+            randomPage = Number(random(splittedPages))
+            chosenPage = randomPage == 1 ? '' : `_${randomPage}` 
+            page = URL + chosenPage
+            return closure(page)
         }
     }
 }
