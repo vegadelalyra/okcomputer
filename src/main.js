@@ -72,7 +72,7 @@ export default function getQuotes(keyword, wordsPerPhrase = 9) {
             if ($(this)
                 .text()
                 .split(' ')
-                .length < wordsPerPhrase
+                .length <= wordsPerPhrase
                 ) epistle.push($(this).text())
             }) 
             
