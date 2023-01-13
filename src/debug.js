@@ -1,17 +1,17 @@
 import getQuotes from "./main.js"
-// import rl from "../lib/utility.js"
+import rl from "../lib/utility.js"
 
-// // Reads user input
-// const keywords = await new Promise(
-//     resolve => rl.question(
-//         'I do listen, human: ',
-//         resolve
-//     )
-// ); rl.close()
+// Reads user input
+const keywords = await new Promise(
+    resolve => rl.question(
+        'I do listen, human: ',
+        resolve
+    )
+); rl.close()
 
 let n = 0, avg = []; do {
     // fetchs and displays random phrase from scraped web
-    // console.log('...' + keywords + '? Let me jump in, human...')
+    console.log('...' + keywords + '? Let me jump in, human...')
     const start = performance.now()
     const okcomputer = await getQuotes('universe', 1)
     console.log(okcomputer)

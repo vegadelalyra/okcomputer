@@ -36,17 +36,21 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
     if (!havePages) return closure()
     
     // pagination (code will scrape a random page)
-    havePages = Number(havePages.split('\n').findLast(n => !isNaN(n) && !!n))
+    havePages = havePages.split('\n').findLast(n => !isNaN(n) && !!n)
     const splittedPages = Array.from({length: havePages}, (_, i) => i + 1)
 
     // get random page
     function random(arr) {return arr[Math.floor(Math.random()*arr.length)]}
-    let randomPage = Number(random(splittedPages))
-    let chosenPage = randomPage == 1 ? '' : `_${randomPage}` 
-    let page = URL + chosenPage
+    function rP() { return Number(random(splittedPages)) }
+    function pageGen() {
+        let chosenPage = randomPage == 1 ? '' : `_${randomPage}` 
+        return URL + chosenPage
+    }; let randomPage = rP()
+    let page = pageGen()
 
     // Required variables
-    const end = "\nTry changing your quote's length\n", epistle = []
+    const end = "\nTry changing your quote's length\
+    \x1b[33m(okcomputer -w)\x1b[37m\n", epistle = []
 
     return closure()
 
@@ -78,9 +82,8 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
             if (!havePages || !splittedPages.length) return end
 
             // Callback to next page
-            randomPage = Number(random(splittedPages))
-            chosenPage = randomPage == 1 ? '' : `_${randomPage}` 
-            page = URL + chosenPage
+            randomPage = rP()
+            page = pageGen()
             return closure(page)
         }
     }
