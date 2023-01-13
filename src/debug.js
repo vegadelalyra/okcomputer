@@ -13,7 +13,7 @@ let n = 0, avg = []; do {
     // fetchs and displays random phrase from scraped web
     console.log('...' + keywords + '? Let me jump in, human...')
     const start = performance.now()
-    const okcomputer = await getQuotes('universe', 1)
+    const okcomputer = await getQuotes(keywords, 10)
     console.log(okcomputer)
 
     // record time performance
