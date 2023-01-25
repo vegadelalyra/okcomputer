@@ -1,6 +1,7 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 
 export default async function getQuotes(keyword, wordsPerPhrase = 9) {
+    console.time('Quote scraped from web on')
     // guard clause for keyword: must be only letters.
     if ( /[^a-zA-Z\s]/.test(keyword) || !keyword ) {
         return '\nError: Please insert valid keywords\
@@ -22,7 +23,7 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
     async function fet(u) {
         const res = await fetch(u)
         const html = await res.text()
-        const $ = cheerio.load(html)
+        const $ = load(html)
         return $
     }; let $ = await fet(URL)
     
@@ -74,6 +75,7 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
         // output
         let chosenOne = random(epistle)
         chosenOne = chosenOne.slice(0, -1)
+        console.timeEnd('Quote scraped from web on')
         return '\x1b[33m' + chosenOne + '\x1b[37m'
 
         function innerClosure() {
