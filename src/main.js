@@ -74,14 +74,14 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
         
         // output
         let chosenOne = random(epistle)
-        chosenOne = chosenOne.slice(1, -1)
+        chosenOne = chosenOne.slice(0, -1)
         epistle = chosenOne.toLowerCase().split(' ')
         .findIndex(word => word.includes(keyword.toLowerCase()))
         chosenOne = chosenOne.split(' ')
-        chosenOne[epistle] = `\x1b[93m${chosenOne[epistle]}\x1b[37m`
+        chosenOne[epistle] = `\x1b[36;1m${chosenOne[epistle]}\x1b[37m`
         chosenOne = chosenOne.join(' ')
         console.timeEnd('Quote scraped from web on')
-        return chosenOne
+        return '   ' + chosenOne
 
         function innerClosure() {
             // Pagination's Guard Clause: non-matching quote on page
