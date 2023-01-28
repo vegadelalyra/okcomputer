@@ -28,7 +28,7 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
     }; let $ = await fet(URL)
     
     // Required variables
-    const end = "\nTry changing your quote's length\
+    let end = "\nTry changing your quote's length\
     \x1b[33m(okcomputer -w)\x1b[37m\n", epistle = []
 
     // In first place xd guard clause: Do we have your word?
@@ -74,9 +74,14 @@ export default async function getQuotes(keyword, wordsPerPhrase = 9) {
         
         // output
         let chosenOne = random(epistle)
-        chosenOne = chosenOne.slice(0, -1)
+        chosenOne = chosenOne.slice(1, -1)
+        epistle = chosenOne.toLowerCase().split(' ')
+        .findIndex(word => word.includes(keyword.toLowerCase()))
+        chosenOne = chosenOne.split(' ')
+        chosenOne[epistle] = `\x1b[93m${chosenOne[epistle]}\x1b[37m`
+        chosenOne = chosenOne.join(' ')
         console.timeEnd('Quote scraped from web on')
-        return '\x1b[33m' + chosenOne + '\x1b[37m'
+        return chosenOne
 
         function innerClosure() {
             // Pagination's Guard Clause: non-matching quote on page
